@@ -4,6 +4,8 @@ using Explorer.Stakeholders.Infrastructure;
 using Explorer.Tours.Infrastructure;
 using Explorer.Encounters.Infrastructure;
 using Microsoft.Extensions.FileProviders;
+using Microsoft.AspNetCore;
+using System.Net;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -25,7 +27,7 @@ builder.Services.ConfigureEncountersModule();
 
 var app = builder.Build();
 
-if (app.Environment.IsDevelopment())
+/*if (app.Environment.IsDevelopment())
 {
     app.UseDeveloperExceptionPage();
     app.UseSwagger();
@@ -35,7 +37,11 @@ else
 {
     app.UseExceptionHandler("/error");
     app.UseHsts();
-}
+}*/
+
+
+
+
 app.UseStaticFiles(new StaticFileOptions
 {
     FileProvider = new PhysicalFileProvider(
