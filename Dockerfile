@@ -34,7 +34,7 @@ RUN dotnet tool install --global dotnet-ef --version 7.*
 FROM migration-base AS execute-migration
 
 ENV STARTUP_PROJECT=Explorer.API
-ENV MIGRATION=init
+ENV MIGRATION=init1
 ENV DATABASE_SCHEMA=""
 ENV DATABASE_HOST=""
 ENV DATABASE_PASSWORD=""
