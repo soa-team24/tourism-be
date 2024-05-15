@@ -1,0 +1,94 @@
+syntax = "proto3";
+
+
+option csharp_namespace = "GrpcServiceTranscoding";
+
+import "Protos/google/api/annotations.proto";
+import "google/protobuf/timestamp.proto";
+
+package FollowService;    //proto/follower
+
+
+service FollowService {
+    rpc AddFollow(AddFollowRequest) returns (AddFollowResponse) {
+        option (google.api.http) = {
+            post: "/follow"
+            body: "*"
+        };
+    }
+
+    rpc GetAllFollowersForUser(GetFollowersRequest) returns(GetFollowersResponse) {
+        option (google.api.http) = {
+            get: "/userFollowers/{userId}"
+        };
+    }
+
+    rpc GetAllFollowersOfMyFollowers(GetFollowersOfMyFollowersRequest) returns(GetFollowersResponse) {
+        option (google.api.http) = {
+            get: "/userSuggestedFollowers/{userId}"
+        };
+    }
+
+    rpc GetAllProfiles(GetAllProfilesRequest) returns (GetAllProfilesResponse) {
+        option (google.api.http) = {
+            get: "/profiles"
+        };
+    }
+
+    rpc CheckIfUserFollows(CheckIfUserFollowsRequest) returns (CheckIfUserFollowsResponse) {
+        option (google.api.http) = {
+            get: "/checkIfFollows/{followerID}/{userID}"
+        };
+    }
+    
+}
+
+message AddFollowRequest {
+    Follow follow = 1;
+}
+
+message AddFollowResponse {
+}
+
+message GetFollowersRequest {
+    uint32 user_id = 1;
+}
+
+message GetFollowersResponse {
+    repeated ProfileF followers = 1;
+}
+
+message GetFollowersOfMyFollowersRequest {
+    uint32 user_id = 1;
+}
+
+
+message GetAllProfilesRequest {}
+
+message GetAllProfilesResponse {
+    repeated ProfileF profiles = 1;
+}
+
+message CheckIfUserFollowsRequest {
+    uint32 follower_id = 1;
+    uint32 user_id = 2;
+}
+
+message CheckIfUserFollowsResponse {
+    bool is_following = 1;
+}
+
+message ProfileF {
+    int64 id = 1;
+    string first_name = 2;
+    string last_name = 3;
+    string profile_picture = 4;
+    int64 user_id = 5;
+    repeated ProfileF followers = 6;
+}
+
+message Follow {
+    uint32 profile_id = 1;
+    uint32 follower_id = 2;
+}
+

@@ -1,0 +1,212 @@
+syntax = "proto3";
+
+option csharp_namespace = "GrpcServiceTranscoding";
+
+import "Protos/google/api/annotations.proto";
+import "google/protobuf/timestamp.proto";
+
+package BlogService;    //proto/blog
+
+service BlogService {
+   rpc GetAllBlogs(GetAllRequest) returns(GetBlogsResponse) {
+      option (google.api.http) = {
+        get: "/blog"
+      };
+    }
+
+    rpc GetBlogById(GetByIdRequest) returns(BlogResponse) {
+        	option (google.api.http) = {
+			get: "/blog/{id}"
+		};
+    }
+
+    rpc PostBlog(CreateBlogRequest) returns(BlogResponse) {
+                option (google.api.http) = {
+                        post: "/blog"
+                        body: "*"
+                };
+    }
+
+    rpc UpdateBlog(UpdateBlogRequest) returns(BlogResponse) {
+        	option (google.api.http) = {
+			patch: "/blog/{id}"
+		};
+    }
+
+    rpc DeleteBlog(GetByIdRequest) returns(BlogResponse) {
+        	option (google.api.http) = {
+			delete: "/blog/{id}"
+		};
+        }
+
+    rpc GetBlogsByAuthorId(GetByIdRequest) returns(GetBlogsResponse) {
+        	option (google.api.http) = {
+			get: "/blog/byUser/{id}"
+		};
+    }
+
+    rpc GetAllVotes(GetByIdRequest) returns(GetAllVotesResponse) {
+        	option (google.api.http) = {
+			get: "/blog/allVotes/{id}"
+		};
+    }
+
+    rpc GetVotesCount(GetByIdRequest) returns(GetVotesCountResponse) {
+        	option (google.api.http) = {
+			get: "/blog/votes/{id}"
+		};
+    }
+
+    rpc AddVote(AddVoteRequest) returns(VoteResponse) {
+        	option (google.api.http) = {
+			patch: "/blog/addVote/{id}"
+                    body: "vote"
+		};
+    }
+
+    rpc ChangeVote(ChangeVoteRequest) returns(VoteResponse) {
+        	option (google.api.http) = {
+			patch: "/blog/updateVote/{id}/{index}"
+                    body: "vote"
+		};
+    }
+
+    rpc AddComment(AddCommentRequest) returns(CommentResponse) {
+        	option (google.api.http) = {
+			patch: "/blog/addComment/{id}"
+                    body: "comment"
+		};
+    }
+
+    rpc UpdateComment(UpdateCommentRequest) returns(CommentResponse) {
+        	option (google.api.http) = {
+			patch: "/blog/updateComment/{id}/{index}"
+                    body: "comment"
+		};
+    }
+
+    rpc DeleteComment(DeleteCommentRequest) returns(CommentResponse) {
+        	option (google.api.http) = {
+			get: "/blog/deleteComment/{id}/{index}"
+		};
+    }
+
+
+}
+
+message GetAllRequest {
+}
+
+message GetBlogsResponse {
+  repeated Blog blogs = 1;
+}
+
+message GetByIdRequest {
+  string id = 1;
+}
+
+message BlogResponse {
+  Blog blog = 1;
+}
+
+message CreateBlogRequest {
+  Blog blog = 1;
+}
+
+message UpdateBlogRequest{
+        string id = 1;
+        Blog blog = 2;
+}
+
+message GetAllVotesResponse {
+    repeated Vote votes = 1;
+}
+
+message GetVotesCountResponse {
+    uint32 count = 1;
+}
+
+message AddVoteRequest{
+        string id = 1;
+        Vote vote = 2;
+}
+
+message VoteResponse {
+    Vote vote = 1;
+}
+
+message ChangeVoteRequest{
+        string id = 1;
+        uint32 index = 2;
+        Vote vote = 3;
+}
+
+message AddCommentRequest{
+        string id = 1;
+        Comment comment = 2;
+}
+
+message CommentResponse {
+    Comment comment = 1;
+}
+
+message UpdateCommentRequest{
+        string id = 1;
+        uint32 index = 2;
+        Comment comment = 3;
+}
+
+message DeleteCommentRequest{
+        string id = 1;
+        uint32 index = 2;
+}
+
+
+message Comment {
+    string id = 1;
+    uint32 userId = 2;
+    string username = 3;
+    string text = 4;
+    google.protobuf.Timestamp creationTime = 5;
+    google.protobuf.Timestamp lastModification = 6;
+}
+
+message Vote {
+    string id = 1;
+    bool isUpvote = 2;
+    uint32 userId = 3;
+    google.protobuf.Timestamp creationTime = 4;
+}
+
+message Blog {
+    string id = 1;
+    uint32 userId = 2;
+    string username = 3;
+    string title = 4;
+    string description = 5;
+    google.protobuf.Timestamp creationTime = 6;
+    enum Status {
+        Published = 0;
+        Closed = 1;
+        Active = 2;
+        Famous = 3;
+    };
+    Status status = 7;
+    string image = 8;
+    enum Category {
+        Travelogues = 0;
+        Activities = 1;
+        Gastronomy = 2;
+        Tips = 3;
+        Culture = 4;
+        Accommodation = 5;
+    };
+    Category category = 9;
+    repeated Comment comments = 10;
+    repeated Vote votes = 11;
+}
+
+
+
+
+

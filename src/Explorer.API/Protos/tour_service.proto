@@ -1,0 +1,357 @@
+syntax = "proto3";
+
+
+option csharp_namespace = "GrpcServiceTranscoding";
+
+import "Protos/google/api/annotations.proto";
+import "google/protobuf/timestamp.proto";
+
+package TourService;    //proto/tour
+
+
+
+service TourService {
+
+  rpc GetTour(GetRequest) returns(TourResponse) {
+    option (google.api.http) = {
+      get: "/tour/{id}"
+    };
+  }
+
+  
+ rpc GetAllTours(GetAllRequestTour) returns(GetToursResponse) {
+      option (google.api.http) = {
+        get: "/tour"
+      };
+  }
+
+  rpc PostTour(CreateTourRequest) returns(TourResponse) {
+      option (google.api.http) = {
+          post: "/tour"
+          body: "*"
+      };
+    }
+
+  rpc UpdateTour(UpdateTourRequest) returns(TourResponse) {
+        	option (google.api.http) = {
+			    patch: "/tour/{id}"
+		};
+  }
+
+  rpc DeleteTour(GetRequest) returns(TourResponse) {
+        	option (google.api.http) = {
+			delete: "/tour/{id}"
+		};
+  }
+
+  rpc GetToursByAuthor(GetRequest) returns(GetToursResponse) {
+        	option (google.api.http) = {
+			get: "/toursByAuthorId/{authorId}"
+		};
+  }
+
+
+
+  rpc GetCheckpoint(GetRequest) returns(CheckpointResponse) {
+    option (google.api.http) = {
+      get: "/checkpoint/{id}"
+    };
+  }
+
+  rpc PostCheckpoint(CreateCheckpointRequest) returns(CheckpointResponse) {
+      option (google.api.http) = {
+          post: "/checkpoint"
+          body: "*"
+      };
+  }
+
+  rpc UpdateCheckpoint(UpdateCheckpointRequest) returns(CheckpointResponse) {
+        	option (google.api.http) = {
+			    patch: "/checkpoint/{id}"
+		};
+  }
+
+
+  rpc DeleteCheckpoint(GetRequest) returns(CheckpointResponse) {
+      option (google.api.http) = {
+        delete: "/checkpoint/{id}"
+      };
+  }
+
+ rpc GetCheckpointsByTourId(GetRequest) returns(GetCheckpointsResponse) {
+        	option (google.api.http) = {
+			get: "/checkpointByTourID/{id}"
+		};
+  }
+
+
+  rpc GetEquipment(GetRequest) returns(EquipmentResponse) {
+    option (google.api.http) = {
+      get: "/equipment/{id}"
+    };
+  }
+
+
+  rpc PostEquipment(CreateEquipmentRequest) returns(EquipmentResponse) {
+      option (google.api.http) = {
+          post: "/equipment"
+          body: "*"
+      };
+  }
+
+  rpc UpdateEquipment(UpdateEquipmentRequest) returns(EquipmentResponse) {
+        	option (google.api.http) = {
+			    patch: "/equipment/{id}"
+		};
+  }
+
+  rpc DeleteEquipment(GetRequest) returns(EquipmentResponse) {
+      option (google.api.http) = {
+        delete: "/equipment/{id}"
+      };
+  }
+
+
+
+  rpc PostTourReview(CreateTourReviewRequest) returns(TourReviewResponse) {
+      option (google.api.http) = {
+          post: "/tourReview"
+          body: "*"
+      };
+  }
+
+  rpc UpdateTourReview(UpdateTourReviewRequest) returns(TourReviewResponse) {
+        	option (google.api.http) = {
+			    patch: "/tourReview/{id}"
+		};
+  }
+
+  rpc DeleteTourReview(GetRequest) returns(TourReviewResponse) {
+      option (google.api.http) = {
+        delete: "/tourReview/{id}"
+      };
+  }
+
+  rpc GetAllTourReviews(GetAllRequestTour) returns(GetTourReviewsResponse) {
+      option (google.api.http) = {
+        get: "/tourReview"
+      };
+  }
+
+  rpc GetTourReviewsByTourID(GetRequest) returns(GetTourReviewsResponse) {
+        	option (google.api.http) = {
+			get: "/tourReview/{id}"
+		};
+  }
+
+  rpc GetAverageGradeForTour(GetRequest) returns(GetAverageGradeForTourRequest) {
+        	option (google.api.http) = {
+			get: "/tourReview/average-grade/{id}"
+		};
+  }
+  rpc GetTourProblem(GetRequest) returns(TourProblemResponse) {
+      option (google.api.http) = {
+        get: "/tourProblem/{id}"
+      };
+    }
+
+
+  rpc PostTourProblem(CreateTourProblemRequest) returns(TourProblemResponse) {
+      option (google.api.http) = {
+          post: "/tourProblem"
+          body: "*"
+      };
+  }
+
+  rpc UpdateTourProblem(UpdateTourProblemRequest) returns(TourProblemResponse) {
+        	option (google.api.http) = {
+			    patch: "/tourProblem/{id}"
+		};
+  }
+
+  rpc DeleteTourProblem(GetRequest) returns(TourProblemResponse) {
+      option (google.api.http) = {
+        delete: "/tourProblem/{id}"
+      };
+  }
+
+  rpc GetTourProblemsForTourist(GetRequest) returns(GetTourProblemsResponse) {
+        	option (google.api.http) = {
+			get: "/tourProblems/{id}"
+		};
+  }
+
+
+}
+
+message GetAllRequestTour {
+}
+
+message GetToursResponse {
+  repeated Tour tours = 1;
+}
+
+message GetRequest {
+  string id = 1;
+}
+
+message TourResponse {
+  Tour tour = 1;
+}
+message TourEmptyResponse {
+}
+
+message CreateTourRequest {
+  Tour tour = 1;
+}
+
+message UpdateTourRequest{
+        string id = 1;
+        Tour tour = 2;
+}
+
+
+
+message CheckpointResponse {
+  Checkpoint checkpoint = 1;
+}
+
+message GetCheckpointsResponse {
+  repeated Checkpoint checkpoints = 1;
+}
+
+message CreateCheckpointRequest {
+  Checkpoint checkpoint = 1;
+}
+
+message UpdateCheckpointRequest{
+        string id = 1;
+        Checkpoint checkpoint = 2;
+}
+
+
+message EquipmentResponse {
+  Equipment equipment = 1;
+}
+
+message GetEquipmentsResponse {
+  repeated Equipment equipments = 1;
+}
+
+message CreateEquipmentRequest {
+  Equipment equipment = 1;
+}
+
+message UpdateEquipmentRequest{
+        string id = 1;
+        Equipment equipment = 2;
+}
+
+
+
+message TourReviewResponse {
+  TourReview tourReview = 1;
+}
+
+message GetTourReviewsResponse {
+  repeated TourReview tourReviews = 1;
+}
+
+message CreateTourReviewRequest {
+  TourReview tourReview = 1;
+}
+
+message UpdateTourReviewRequest{
+        string id = 1;
+        TourReview tourReview = 2;
+}
+
+message GetAverageGradeForTourRequest{
+        float averageGrade = 1;
+}
+
+
+
+message TourProblemResponse {
+  TourProblem tourProblem = 1;
+}
+
+message GetTourProblemsResponse {
+  repeated TourProblem tourProblems = 1;
+}
+
+message CreateTourProblemRequest {
+  TourProblem tourProblem = 1;
+}
+
+message UpdateTourProblemRequest{
+        string id = 1;
+        TourProblem tourProblem = 2;
+}
+
+
+message Tour {
+    string id = 1;
+    uint32 authorId = 2;
+    string name = 3;
+    string description = 4;
+    string publishTime = 5;
+    enum Status {
+        Draft = 0;
+        Published = 1;
+        Archived = 2;
+    };
+    Status status = 6;
+    string image = 7;
+    uint32 difficulty = 8;
+    float price = 9;
+    float footTime = 10;
+    float bicycleTime = 11;
+    float carTime = 12;
+    float totalLength = 13;
+}
+
+message Checkpoint {
+    string id = 1;
+    string tourId = 2;
+    float latitude = 3;
+    float longitude = 4;
+    string name = 5;
+    string description = 6;
+    string image = 7;
+    bool isPublic = 8;
+  
+}
+
+message Equipment {
+    string id = 1;
+    string name = 2;
+    string description = 3;
+  
+}
+
+message TourReview {
+    string id = 1;
+    uint32 grade = 2;
+    string comment = 3;
+    uint32 userId = 4;
+    google.protobuf.Timestamp visitDate = 5;
+    google.protobuf.Timestamp reviewDate = 6;
+    string images = 7;
+    string tourId = 8;
+  
+}
+
+message TourProblem {
+  string id = 1;
+  string problemCategory = 2;
+  string problemPriority = 3;
+  google.protobuf.Timestamp timeStamp = 4;
+  string description = 5;
+  string tourId = 6;
+  bool isClosed = 7;
+  bool isResolved = 8;
+  uint32 touristId = 9;
+  google.protobuf.Timestamp deadlineTimeStamp = 10;
+}
+

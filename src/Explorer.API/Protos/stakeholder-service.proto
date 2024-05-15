@@ -1,0 +1,91 @@
+syntax = "proto3";
+
+
+option csharp_namespace = "GrpcServiceTranscoding";
+
+import "Protos/google/api/annotations.proto";
+import "google/protobuf/timestamp.proto";
+
+package StakeholderService;    //proto/stakeholder
+
+
+service StakeholderService {
+  rpc RegisterTourist(RegisterTouristRequest) returns (RegisterTouristResponse) {
+    option (google.api.http) = {
+      post: "/"
+      body: "*"
+    };
+  }
+  rpc Login(LoginRequest) returns (RegisterTouristResponse) {
+    option (google.api.http) = {
+      post: "/login"
+      body: "*"
+    };
+  }
+}
+
+message RegisterTouristRequest {
+  string id = 1;
+  string name = 2;
+  string surname = 3;
+  string email = 4;
+  string username = 5;
+  string password = 6;
+  string profile_picture = 7;
+  string biography = 8;
+  string motto = 9;
+}
+
+message RegisterTouristResponse {
+  string id = 1;
+  string accessToken = 2;
+}
+
+
+
+message LoginRequest {
+  string username = 1;
+  string password = 2;
+}
+
+
+
+message Person {
+  string id = 1;
+  uint32 user_id = 2;
+  string name = 3;
+  string surname = 4;
+  string email = 5;
+}
+
+message Profile {
+  string id = 1;
+  string first_name = 2;
+  string last_name = 3;
+  string profile_picture = 4;
+  string biography = 5;
+  string motto = 6;
+  string user_id = 7;
+  bool is_active = 8;
+  uint32 xP = 9;
+  bool is_first_purchased = 10;
+  bool questionnaire_done = 11;
+  uint32 number_of_completed_tours = 12;
+  bool request_sent = 13;
+}
+
+message User {
+  string id = 1;
+  string username = 2;
+  string password = 3;
+  UserRole role = 4;
+  bool is_active = 5;
+  string email = 6;
+  string token = 7;
+}
+
+enum UserRole {
+  ADMINISTRATOR = 0;
+  AUTHOR = 1;
+  TOURIST = 2;
+}

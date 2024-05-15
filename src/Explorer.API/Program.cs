@@ -6,6 +6,7 @@ using Explorer.Encounters.Infrastructure;
 using Microsoft.Extensions.FileProviders;
 using Microsoft.AspNetCore;
 using System.Net;
+using Explorer.API.Controllers.ProtoControllers;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -17,6 +18,8 @@ builder.Services.ConfigureAuth();
 
 builder.Services.AddHttpContextAccessor();
 builder.Services.RegisterModules();
+
+builder.Services.AddGrpc().AddJsonTranscoding();
 
 
 //Builder Module Configurations
@@ -77,6 +80,7 @@ app.UseStaticFiles(new StaticFileOptions
           Path.Combine(builder.Environment.ContentRootPath, "Images")),
     RequestPath = "/Images"
 });
+app.MapGrpcService<AuthenticationController>();
 
 app.Run();
 
